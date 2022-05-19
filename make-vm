@@ -1,0 +1,36 @@
+#!/bin/bash
+# -*- shell -*-
+
+# 2022-05-17 I tried 22.04 but my config is failing for some reason, whereas
+# it works fine in 20.04/lts.
+
+base=lts
+config=$1
+name=$2
+
+# multipass set local.driver=hyperkit
+echo -e "\033[33;32m———————————————————————————————————————————————————\033[0m"
+echo -e "\033[33;32mCreating virtual machine based on $base ...\033[0m"
+echo -e "\033[33;32m———————————————————————————————————————————————————\033[0m"
+multipass launch -vvvv --timeout 2400 --name $name \
+          --cpus 2 --mem 4G --disk 64G \
+          --cloud-init $config.yaml $base
+
+multipass restart $name
+
+echo -e "\033[33;32m———————————————————————————————————————————————————\033[0m"
+echo -e "\033[33;32mCopying config file ...\033[0m"
+echo -e "\033[33;32m———————————————————————————————————————————————————\033[0m"
+multipass mount ~/system $name:/mnt/system
+multipass exec -vvvv $name -- sudo -u mhucka -i bash -c "git clone /mnt/system"
+multipass exec -vvvv $name -- sudo -u mhucka -i "/home/mhucka/system/bin/makelinks"
+
+echo -e "\033[33;32m———————————————————————————————————————————————————\033[0m"
+echo -e "\033[33;32mFinished.\033[0m"
+echo -e "\033[33;32m———————————————————————————————————————————————————\033[0m"
+
+multipass list
+
+
+# VMs are here on macOS:
+# /var/root/Library/Application Support/multipassd/vault/instances
