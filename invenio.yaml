@@ -1,0 +1,70 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+output: {all: '| tee -a /var/log/cloud-init-output.log'}
+fqdn: invenio.local
+packages:
+  - build-essential
+  - apache2
+  - apache2-utils
+  - bat
+  - boxes
+  - bzip2
+  - curl 
+  - delta
+  - fswatch
+  - fzf
+  - ghostscript
+  - git
+  - git-lfs
+  - glances
+  - htop
+  - jq
+  - libapache2-mod-wsgi 
+  - libcairo2-dev
+  - libxt-dev
+  - manpages-dev
+  - net-tools
+  - python3-dev
+  - python3-pip
+  - rsync
+  - snapcraft
+  - ssl-cert
+  - tcsh
+  - tree
+  - wget
+  - xrdp
+  - zsh
+  - imagemagick
+  - ubuntu-desktop
+snap:
+  commands:
+    - [ install, emacs, --channel=beta, --classic ]
+    - [ install, docker ]
+groups:
+  - docker
+  - staff
+  - www-data
+users:
+  - default
+  - name: mhucka
+    shell: /bin/tcsh
+    gecos: Mike Hucka
+    primary_group: staff
+    groups: [ users, staff, adm, sudo, www-data ]
+    ssh_import_id:
+      - gh:mhucka
+    sudo: ALL=(ALL) NOPASSWD:ALL
+runcmd:
+  - adduser ubuntu docker
+  - adduser ubuntu staff
+  - adduser ubuntu www-data
+  - python3 -m pip install invenio-cli
+
+
+# For invenio, have found:
+# - must use nvm using the post-installation procedure
+# - must use node 14 via nvm, not latest node
+# - do not install node part of cloud-init
+# - do not install virtualenv as part of cloud-init
+# - do not install docker-compose as packages; use snap
