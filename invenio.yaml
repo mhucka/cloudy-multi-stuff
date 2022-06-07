@@ -4,11 +4,9 @@ package_upgrade: true
 output: {all: '| tee -a /var/log/cloud-init-output.log'}
 fqdn: invenio.local
 packages:
-  - build-essential
-  - apache2
-  - apache2-utils
   - bat
   - boxes
+  - build-essential
   - bzip2
   - curl 
   - delta
@@ -19,6 +17,7 @@ packages:
   - git-lfs
   - glances
   - htop
+  - imagemagick
   - jq
   - libapache2-mod-wsgi 
   - libcairo2-dev
@@ -32,11 +31,10 @@ packages:
   - ssl-cert
   - tcsh
   - tree
+  - ubuntu-desktop
   - wget
   - xrdp
   - zsh
-  - imagemagick
-  - ubuntu-desktop
 snap:
   commands:
     - [ install, emacs, --channel=beta, --classic ]
