@@ -4,12 +4,15 @@ package_upgrade: true
 output: {all: '| tee -a /var/log/cloud-init-output.log'}
 fqdn: invenio.local
 packages:
+  - alien
+  - atop
   - bat
   - boxes
   - build-essential
   - bzip2
   - curl 
   - delta
+  - dstat
   - fswatch
   - fzf
   - ghostscript
@@ -34,6 +37,7 @@ packages:
   - ubuntu-desktop
   - wget
   - xrdp
+  - zip
   - zsh
 snap:
   commands:

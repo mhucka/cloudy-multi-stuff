@@ -3,6 +3,8 @@ package_update: true
 package_upgrade: true
 output: {all: '| tee -a /var/log/cloud-init-output.log'}
 packages:
+  - alien
+  - atop
   - build-essential
   - apache2
   - apache2-utils
@@ -15,6 +17,7 @@ packages:
   - curl 
   - delta
   - docker-compose
+  - dstat
   - flake8
   - fswatch
   - fzf
@@ -42,6 +45,7 @@ packages:
   - virtualenv
   - wget
   - xrdp
+  - zip
   - zsh
   - imagemagick
 snap:
