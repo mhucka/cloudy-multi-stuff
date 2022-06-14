@@ -26,11 +26,16 @@ echo -e "\033[33;32m————————————————————
 multipass mount ~/system $name:/mnt/system
 multipass exec -vvvv $name -- sudo -u mhucka -i bash -c "git clone /mnt/system"
 multipass exec -vvvv $name -- sudo -u mhucka -i "/home/mhucka/system/bin/makelinks"
+multipass exec -vvvv $name -- sudo -u mhucka -i bash -c "rm ~/.npmrc"
 
-multipass mount ~/system $name:/mnt/system
 multipass exec -vvvv $name -- bash -c "git clone /mnt/system"
 multipass exec -vvvv $name -- /home/mhucka/system/bin/makelinks
 multipass exec -vvvv $name -- bash -c "rm ~/.npmrc"
+
+# Cause Emacs to set up packages, so that I don't have to wait for it the
+# first time I use Emacs.
+multipass exec -vvvv $name -- bash -c "emacs --batch --load ~/.emacs"
+
 
 echo -e "\033[33;32m———————————————————————————————————————————————————\033[0m"
 echo -e "\033[33;32mFinished.\033[0m"
